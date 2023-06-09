@@ -216,7 +216,6 @@ exports.getUserById = async function (req, res) {
 
     // Find posts where the 'user' field is in the array of following IDs
 
-    console.log(user);
     res.status(200).json({ user });
   } catch (error) {
     console.error("Error occurred while fetching user:", error);
