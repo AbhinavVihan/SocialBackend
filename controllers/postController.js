@@ -59,7 +59,7 @@ exports.createPost = async function (req, res) {
 
 exports.getFollowingPosts = async function (req, res) {
   try {
-    const userId = req.user.id; // Assuming you have implemented authentication and attach the user object to the request
+    const userId = req.user.id;
 
     // Find the user and populate the 'following' field
     const user = await User.findById(userId).populate("following");
@@ -87,7 +87,7 @@ exports.getFollowingPosts = async function (req, res) {
 
 exports.getUserPosts = async function (req, res) {
   try {
-    const userId = req.user.id; // Assuming you have implemented authentication and attach the user object to the request
+    const userId = req.user.id;
 
     // Find the user and populate the 'following' field
     const user = await User.findById(userId).populate("posts");
