@@ -78,8 +78,11 @@ exports.getFollowingPosts = async function (req, res) {
         select: "userName",
       },
     });
-
-    res.status(200).json(posts);
+    if (posts.length === 0) {
+      res.status(200).json(null);
+    } else {
+      res.status(200).json(posts);
+    }
   } catch (error) {
     console.error("Error occurred while fetching following posts:", error);
     res
