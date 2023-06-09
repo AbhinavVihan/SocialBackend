@@ -14,11 +14,18 @@ exports.singup = async function signUp(req, res) {
 
     // Check if the username already exists
     const existingUser = await User.findOne({ userName });
+    const existingEmail = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ error: "Username already exists" });
     }
 
+    if (existingEmail) {
+      return res.status(409).json({ error: "Email already exists" });
+    }
     let imageUrl;
+    if (!req.file) {
+      return res.status(409).json({ error: "Please add your photo" });
+    }
     if (req.file) {
       imageUrl = req.file.path; // Use the file path from multer
     }
@@ -107,11 +114,9 @@ exports.protect = async (req, res, next) => {
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
-    return res
-      .status(404)
-      .json({
-        error: "the user belonging to this token does no longer exists",
-      });
+    return res.status(404).json({
+      error: "the user belonging to this token does no longer exists",
+    });
   }
 
   // grant access to protected route

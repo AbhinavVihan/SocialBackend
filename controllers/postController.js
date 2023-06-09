@@ -29,6 +29,9 @@ exports.createPost = async function (req, res) {
     const author = req.user.id;
 
     let imageUrl;
+    if (!req.file) {
+      return res.status(409).json({ error: "Please add a photo" });
+    }
     if (req.file) {
       imageUrl = req.file.path; // Use the file path from multer
     }
