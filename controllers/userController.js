@@ -95,6 +95,11 @@ exports.login = async function login(req, res) {
 exports.protect = async (req, res, next) => {
   // 1) getting token and check if its there
   let token;
+  if (req.headers.authorization.split(" ")[1] === "null") {
+    return res.status(401).json({
+      message: "No token provided",
+    });
+  }
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")

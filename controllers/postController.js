@@ -231,3 +231,29 @@ exports.addComment = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getTaggedPosts = async function (req, res) {
+  try {
+    const userId = req.user.id;
+
+    const posts = await Post.find().populate({
+      path: "author",
+      select: "userName",
+    });
+
+    // Extract the array of user IDs from the 'following' field
+    const taggedPosts = posts.filter((post) => post.tags.includes(userId));
+
+    if (posts.length === 0) {
+      res.status(200).json(null);
+    } else {
+      res.status(200).json(taggedPosts);
+    }
+    // }
+  } catch (error) {
+    console.error("Error occurred while fetching tagged posts:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching tagged posts" });
+  }
+};

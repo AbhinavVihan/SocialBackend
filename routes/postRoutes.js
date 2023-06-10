@@ -16,6 +16,10 @@ router
   .get(authenticateToken, postController.getUserPosts);
 
 router
+  .route("/getTaggedPosts")
+  .get(authenticateToken, postController.getTaggedPosts);
+
+router
   .route("/getPostsByUserId")
   .get(authenticateToken, postController.getPostsByUserId);
 
