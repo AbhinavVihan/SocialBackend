@@ -67,7 +67,11 @@ exports.login = async function login(req, res) {
     // Find the user by username
     const user = await User.findOne({ userName }).select("+password");
     if (!user) {
-      return res.status(401).json({ error: "Invalid username or password" });
+      return res
+        .status(401)
+        .json({
+          error: "You have not signed up yet, Please signup to continue",
+        });
     }
 
     // Compare the provided password with the stored hashed password
